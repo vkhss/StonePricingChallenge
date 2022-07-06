@@ -29,6 +29,7 @@ can be sold
 {
     "cpnj": "00.000.000/0001-00", //customer cnpj
     "tpv": 1000, // volume sold in reais (TPV)
+    "productId": "1", // id of product (more examples below!)
     "sellerSeniority": "JR", //seller seniority (more examples below!)
     "customerSegment": "FOOD", //customer business segment (more examples below!)
     "uf": "SP", //state in which the client is located! (more examples below!)
