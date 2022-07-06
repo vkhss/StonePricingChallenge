@@ -10,6 +10,7 @@ const HOST = process.env.HOST
 
 const app = express()
 
+
 mongo
     .connect(`${process.env.MONGO_URI}`, {
     })

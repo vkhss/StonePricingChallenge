@@ -2,12 +2,24 @@ import { NextFunction, Request, Response } from "express";
 
 const pricingSimulation = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const { tpv, sellerSeniority, customerSegment, uf, sellerPrice } = req.body
+        const { tpv, sellerSeniority, customerSegment, uf, sellerPrice, productId } = req.body
 
         let measure = 0
+        let useQtd = 1
+
+        switch (productId) {
+            case '1':
+            case '2':
+                break;
+            case '3':
+                useQtd = tpv * 0.10
+                break;
+            default:
+                throw 'O campo productId informado não está cadastrado no sistema para mais informações consulte a documentação!'
+        }
 
         //a) Definição de pesos para o TPV
-        if (typeof tpv != 'number') throw 'O campo tpv deve conter valores do tipo numérico, para mais informações consulte a documentação '
+        if (typeof tpv != 'number') throw 'O campo tpv deve conter valores do tipo numérico, para mais informações consulte a documentação!'
         if (tpv >= 1000000) measure += 5
         else if (tpv >= 500000) measure += 4
         else if (tpv >= 100000) measure += 3
@@ -105,17 +117,18 @@ const pricingSimulation = async (req: Request, res: Response, next: NextFunction
                 throw 'O campo "uf" deverá apresentar valores validos, para mais informações consulte a documentação!'
         }
 
-        let sugestedPrice = measure * 10
+        let sugestedPrice = Number((productId == "3" ? ((measure * 10) / useQtd) : measure * 10).toFixed(4))
+        let margin = Number((productId == "3" ? 10 / useQtd : 10).toFixed(4))
         let result, status
 
-        if (sellerPrice > sugestedPrice && sellerPrice > (sugestedPrice + 10)) {
-            result = `O Valor da venda está ACIMA do preço sugerido pela Pedregulho! Tente algo entre R$ ${sugestedPrice - 10} e R$ ${sugestedPrice + 10}`
+        if (sellerPrice > sugestedPrice && sellerPrice > (sugestedPrice + margin)) {
+            result = `O Valor da venda está ACIMA do preço sugerido pela Pedregulho! Tente algo entre R$ ${(sugestedPrice - margin).toFixed(4)} e R$ ${(sugestedPrice + margin).toFixed(4)}`
             status = 400
-        } else if (sellerPrice < sugestedPrice && sellerPrice < (sugestedPrice - 10)) {
-            result = `O Valor da venda está ABAIXO do preço sugerido pela Pedregulho! Tente algo entre R$ ${sugestedPrice - 10} e R$ ${sugestedPrice + 10}`
+        } else if (sellerPrice < sugestedPrice && sellerPrice < (sugestedPrice - margin)) {
+            result = `O Valor da venda está ABAIXO do preço sugerido pela Pedregulho! Tente algo entre R$ ${(sugestedPrice - margin).toFixed(4)} e R$ ${(sugestedPrice + margin).toFixed(4)}`
             status = 400
         } else {
-            result = `O Valor da venda está de ACORDO com o sugerido pela Pedregulho! Entre R$ ${sugestedPrice - 10} e R$ ${sugestedPrice + 10}`
+            result = `O Valor da venda está de ACORDO com o sugerido pela Pedregulho! Entre R$ ${(sugestedPrice - margin).toFixed(4)} e R$ ${(sugestedPrice + margin).toFixed(4)}`
             status = 200
         }
 

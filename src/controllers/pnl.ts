@@ -30,10 +30,12 @@ const sendPnl = async (req: Request, res: Response, next: NextFunction) => {
         let endDate
         let split = 1
         let contractMouths = 10
+
         let productName: string
         const cnpj = req.body.cnpj;
         const productId = req.body.productId;
         const revenues: number = req.body.revenues;
+        const tpv: string = req.body.tpv
         const manufacturingCost: number = req.body.manufacturingCost;
         const shippingCost: number = req.body.shippingCost;
         let pnlExists = false
