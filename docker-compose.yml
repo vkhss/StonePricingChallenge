@@ -7,7 +7,7 @@ services:
       - ./:/node-app
       - ./node_modules:/node-app/node_modules
     ports:
-      - "3000:3000"
+      - "4000:4000"
     links:
       - mongo
   mongo:
