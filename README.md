@@ -35,13 +35,15 @@ can be sold
     "uf": "SP", //state in which the client is located! (more examples below!)
     "sellerPrice": 150 //Value informed by the seller!
 }
+
+| sellerSeniority (Type String) | productId          | customerSegment (Type String) | uf (Type String) | tpv(Type Number) | sellerPrice (Type Number) |
+|-------------------------------|--------------------|-------------------------------|------------------|------------------|---------------------------|
+| jr                            | 1 (Pedra da Sorte) | food                          | SP               | 1000000          | 200                       |
+| pl                            | 2 (Pedra Roxa)     | health                        | MG               | 500000           | 150                       |
+| sr                            | 3 (Pedra Fofa)     | it                            | AM               | 10000            | 100                       |
+|                               |                    | sales                         | PB               | 5000             | 80                        |
 ~~~
-| sellerSeniority (Type String) | customerSegment (Type String) | uf (Type String) | tpv(Type Number) | sellerPrice (Type Number) |
-|-------------------------------|-------------------------------|------------------|------------------|---------------------------|
-| jr                            | food                          | SP               | 1000000          | 200                       |
-| pl                            | health                        | MG               | 500000           | 150                       |
-| sr                            | it                            | AM               | 10000            | 100                       |
-|                               | sales                         | PB               | 5000             | 80                        |
+Note: In the case of inserting product 3 (Pedra), the value indicated by the amount of use of the product in the month and not monthly as too much.
 
 #### response params:
 ```
