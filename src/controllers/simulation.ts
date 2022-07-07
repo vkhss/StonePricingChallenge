@@ -20,11 +20,7 @@ const pricingSimulation = async (req: Request, res: Response, next: NextFunction
 
         //a) Definição de pesos para o TPV
         if (typeof tpv != 'number') throw 'O campo tpv deve conter valores do tipo numérico, para mais informações consulte a documentação!'
-        if (tpv >= 1000000) measure += 5
-        else if (tpv >= 500000) measure += 4
-        else if (tpv >= 100000) measure += 3
-        else if (tpv >= 10000) measure += 2
-        else if (tpv < 5000) measure += 1
+        measure += tpv / 1000
 
         //b) Definição de pesos para senioridade do vendedor
         switch (sellerSeniority.toLowerCase()) {
@@ -44,31 +40,31 @@ const pricingSimulation = async (req: Request, res: Response, next: NextFunction
         //c) Definição de pesos para o segmento de negócio do cliente
         switch (customerSegment.toLowerCase()) {
             case 'food':
-                measure += 5
+                measure += 10
                 break;
             case 'clothing':
-                measure += 4
+                measure += 9
                 break;
             case 'construction':
-                measure += 4
+                measure += 8
                 break;
             case 'health':
-                measure += 4
+                measure += 7
                 break;
             case 'education':
-                measure += 3
+                measure += 6
                 break;
             case 'personalservices':
-                measure += 3
+                measure += 5
                 break;
             case 'specializedservices':
-                measure += 2
+                measure += 4
                 break;
             case 'it':
-                measure += 2
+                measure += 3
                 break;
             case 'sales':
-                measure += 1
+                measure += 2
                 break;
             case 'entertainment':
                 measure += 1
@@ -80,27 +76,27 @@ const pricingSimulation = async (req: Request, res: Response, next: NextFunction
         //d) Definição de pesos para o estado no qual o cliente está localizado!
         switch (uf.toLowerCase()) {
             case 'sp':
-                measure += 5
+                measure += 100
                 break;
             case 'rj':
             case 'mg':
             case 'pr':
             case 'rs':
-                measure += 4
+                measure += 70
                 break;
             case 'sc':
             case 'ba':
             case 'pa':
             case 'es':
             case 'pe':
-                measure += 3
+                measure += 50
                 break;
             case 'am':
             case 'ce':
             case 'mt':
             case 'ms':
             case 'ma':
-                measure += 2
+                measure += 40
                 break;
             case 'pb':
             case 'se':
@@ -111,14 +107,13 @@ const pricingSimulation = async (req: Request, res: Response, next: NextFunction
             case 'ap':
             case 'rr':
             case 'ac':
-                measure += 1
+                measure += 20
                 break;
             default:
                 throw 'O campo "uf" deverá apresentar valores validos, para mais informações consulte a documentação!'
         }
-
-        let sugestedPrice = (measure * 10)
-        let sugestedPricePerUse = productId == "3" ? Number((measure * 10) / useQtd).toFixed(4) : 0
+        let sugestedPrice = measure
+        let sugestedPricePerUse = productId == "3" ? Number((measure) / useQtd).toFixed(4) : 0
         let margin = 10
         let result, status, values
 

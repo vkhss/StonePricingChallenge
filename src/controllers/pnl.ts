@@ -35,7 +35,7 @@ const sendPnl = async (req: Request, res: Response, next: NextFunction) => {
         const cnpj = req.body.cnpj;
         const productId = req.body.productId;
         const revenues: number = req.body.revenues;
-        const tpv: string = req.body.tpv
+        const tpv: number = req.body.tpv
         const manufacturingCost: number = req.body.manufacturingCost;
         const shippingCost: number = req.body.shippingCost;
         let pnlExists = false
@@ -78,6 +78,8 @@ const sendPnl = async (req: Request, res: Response, next: NextFunction) => {
             let taxes = (revenues * 0.1125) / split
             let margin = ((revenues - totalCost) - taxes) / split
             let marginPercentage = `${Number((((margin * 100) / revenues) / split).toFixed(2))}%`
+            let useLimit = tpv * 0.10
+            let revenuesPerUse = productId == "3" ? (revenues / useLimit) : 0
 
             const newPnl = new Pnl({
                 cnpj,
@@ -85,7 +87,10 @@ const sendPnl = async (req: Request, res: Response, next: NextFunction) => {
                 productName,
                 startDate,
                 endDate,
+                tpv,
                 revenues,
+                revenuesPerUse,
+                useLimit,
                 manufacturingCost,
                 shippingCost,
                 totalCost,

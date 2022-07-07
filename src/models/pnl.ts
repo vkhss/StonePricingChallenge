@@ -7,7 +7,9 @@ export interface Pnl extends Document {
     productName: String;
     startDate: String;
     endDate: String;
+    tpv: Number;
     revenues: Number;
+    revenuesPerUse: Number;
     manufacturingCost: Number;
     shippingCost: Number;
     totalCost: Number;
@@ -22,7 +24,9 @@ const PnlSchema = new Schema<Pnl>({
     productName: { type: String, required: true },
     startDate: { type: String, required: true },
     endDate: { type: String, required: true },
+    tpv: { type: Number, required: true },
     revenues: { type: Number, required: true },
+    revenuesPerUse: { type: Number, required: true },
     manufacturingCost: { type: Number, required: true },
     shippingCost: { type: Number, required: true },
     totalCost: { type: Number, required: true },
