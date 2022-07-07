@@ -103,10 +103,10 @@ const sendPnl = async (req: Request, res: Response, next: NextFunction) => {
                     return res.status(500).json(error);
                 });
 
-            i += 1
+            if (i === split) return res.status(201).json({ "msg": "PNLs criadas com sucesso!" })
             startDate = endDate
+            i += 1
 
-            if (i === loop.length) return res.status(201).json({ "msg": "PNLs criadas com sucesso!" })
         }
     } catch (error) {
         return res.status(400).json(error)

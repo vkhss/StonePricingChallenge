@@ -44,7 +44,7 @@ can be sold
 | sr                            | 3 (Pedra Fofa)     | it                            | AM               | 10000            | 100                       |
 |                               |                    | sales                         | PB               | 5000             | 80                        |
 
-Note: In the case of inserting product 3 (Pedra), the value indicated by the amount of use of the product in the month and not monthly as too much.
+Note: In the case of inserting product 3 (Pedra Fofa), the value indicated by the amount of use of the product in the month and together with the monthly value
 
 #### response params:
 ```

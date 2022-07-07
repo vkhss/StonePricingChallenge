@@ -117,22 +117,25 @@ const pricingSimulation = async (req: Request, res: Response, next: NextFunction
                 throw 'O campo "uf" deverá apresentar valores validos, para mais informações consulte a documentação!'
         }
 
-        let sugestedPrice = Number((productId == "3" ? ((measure * 10) / useQtd) : measure * 10).toFixed(4))
-        let margin = Number((productId == "3" ? 10 / useQtd : 10).toFixed(4))
-        let result, status
+        let sugestedPrice = (measure * 10)
+        let sugestedPricePerUse = productId == "3" ? Number((measure * 10) / useQtd).toFixed(4) : 0
+        let margin = 10
+        let result, status, values
 
         if (sellerPrice > sugestedPrice && sellerPrice > (sugestedPrice + margin)) {
-            result = `O Valor da venda está ACIMA do preço sugerido pela Pedregulho! Tente algo entre R$ ${(sugestedPrice - margin).toFixed(4)} e R$ ${(sugestedPrice + margin).toFixed(4)}`
+
+            result = `O Valor da venda está ACIMA do preço sugerido pela Pedregulho! Tente algo entre R$ ${sugestedPrice - margin} e R$ ${sugestedPrice + margin}`
             status = 400
         } else if (sellerPrice < sugestedPrice && sellerPrice < (sugestedPrice - margin)) {
-            result = `O Valor da venda está ABAIXO do preço sugerido pela Pedregulho! Tente algo entre R$ ${(sugestedPrice - margin).toFixed(4)} e R$ ${(sugestedPrice + margin).toFixed(4)}`
+            result = `O Valor da venda está ABAIXO do preço sugerido pela Pedregulho! Tente algo entre R$ ${sugestedPrice - margin} e R$ ${sugestedPrice + margin}`
             status = 400
         } else {
-            result = `O Valor da venda está de ACORDO com o sugerido pela Pedregulho! Entre R$ ${(sugestedPrice - margin).toFixed(4)} e R$ ${(sugestedPrice + margin).toFixed(4)}`
+            result = `O Valor da venda está de ACORDO com o sugerido pela Pedregulho! Entre R$ ${sugestedPrice - margin} e R$ ${sugestedPrice + margin}`
+            values = { sugestedPrice, sugestedPricePerUse }
             status = 200
         }
 
-        return res.status(status).json(status == 200 ? { msg: result } : { failed: result })
+        return res.status(status).json(status == 200 ? { msg: result, values } : { failed: result })
     } catch (error) {
         return res.status(400).json({ error })
     }
