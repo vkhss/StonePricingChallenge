@@ -8,12 +8,4 @@ services:
       - ./node_modules:/node-app/node_modules
     ports:
       - "4000:4000"
-    links:
-      - mongo
-  mongo:
-    image: 'mongo'
-    container_name: mongodb-container
-    ports:
-      - '27017:27017'
-    volumes:
-      - ./data/db:/data/db
+
