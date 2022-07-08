@@ -61,7 +61,7 @@ StatusCode => 400 msg:"O Valor da venda está ABAIXO do preço sugerido pela Ped
 This api  has the purpose of write pnl records for clients on pnl collection using mongoDb. 
 
 ## body params: 
-```
+~~~javascript
 {
     "cnpj": "16501555000157",  // Customer cnpj
     "productId": "1", // Id of product (more examples below!)
@@ -72,7 +72,7 @@ This api  has the purpose of write pnl records for clients on pnl collection usi
     "manufacturingCost": 20, // Total manufacturing costs
     "shippingCost": 12 // Total shipping costs
 }
-```
+~~~
 
 | productId (Type String) * | campaign (String) | uf (Type String) * | tpv(Type Number) * |
 |---------------------------|-------------------|--------------------|--------------------|
