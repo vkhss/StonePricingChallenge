@@ -1,6 +1,10 @@
 const promotionalCampaigns = async (campaign: string, uf: string, tpv: number, measure: number = 0) => {
 
     try {
+
+        if (!campaign) {
+            return measure
+        }
         if (campaign == "10offsp") {
             if (uf == "sp") {
                 measure = measure * 0.90

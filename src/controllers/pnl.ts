@@ -4,6 +4,7 @@ import moment from "moment"
 import utilsCampaign from "../utils/utils-campaign";
 import utilsValidator from "../utils/utils-validator";
 import utilsUf from "../utils/utils-uf";
+import _ from "lodash"
 
 
 //consulta de pnl
@@ -12,7 +13,26 @@ const getPnl = (req: Request, res: Response, next: NextFunction) => {
         .exec()
         .then(results => {
             return res.status(200).json({
-                pnls: results
+                pnls: results.map((p) => {
+                    return {
+                        "cnpj": p.cnpj,
+                        "productId": p.productId,
+                        "productName": p.productName,
+                        "campaign": p.campaign,
+                        "uf": p.uf,
+                        "startDate": p.startDate,
+                        "endDate": p.endDate,
+                        "tpv": p.tpv,
+                        "revenues": p.revenues,
+                        "revenuesPerUse": p.revenuesPerUse,
+                        "manufacturingCost": p.manufacturingCost,
+                        "shippingCost": p.shippingCost,
+                        "totalCost": p.shippingCost,
+                        "taxes": p.taxes,
+                        "margin": p.margin,
+                        "marginPercentage": p.marginPercentage,
+                    }
+                })
             })
         })
         .catch(error => {
@@ -28,10 +48,8 @@ const getPnl = (req: Request, res: Response, next: NextFunction) => {
 const sendPnl = async (req: Request, res: Response, next: NextFunction) => {
     try {
         //validação de campos
-        const mandatoryFields: Array<string> = ['cnpj', 'productId', 'tpv', 'uf', 'campaign', 'revenues', 'manufacturingCost', 'shippingCost']
+        const mandatoryFields: Array<string> = ['cnpj', 'productId', 'tpv', 'uf', 'revenues', 'manufacturingCost', 'shippingCost']
         await utilsValidator.fieldValidator(req.body, mandatoryFields)
-
-        console.log("passou na validação de campos!")
 
         let startDate = moment().format('MM-YYYY');
         let endDate
@@ -44,10 +62,10 @@ const sendPnl = async (req: Request, res: Response, next: NextFunction) => {
         const tpv: number = req.body.tpv
         const manufacturingCost: number = req.body.manufacturingCost;
         const shippingCost: number = req.body.shippingCost;
-        const campaign: string = req.body.campaign.toLowerCase()
+        const campaign: string = req.body.campaign ? req.body.campaign.toLowerCase() : null
+
         const uf: string = req.body.uf.toLowerCase()
         let pnlExists = false
-
 
         //validação de uf
         await utilsUf.uf(uf, 0)
@@ -131,6 +149,7 @@ const sendPnl = async (req: Request, res: Response, next: NextFunction) => {
 
         }
     } catch (error) {
+        console.log(error)
         return res.status(400).json(error)
     }
 

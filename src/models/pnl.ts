@@ -24,7 +24,7 @@ const PnlSchema = new Schema<Pnl>({
     cnpj: { type: String, required: true },
     productId: { type: String, required: true },
     productName: { type: String, required: true },
-    campaign: { type: String, required: true },
+    campaign: { type: String, required: false },
     uf: { type: String, required: true },
     startDate: { type: String, required: true },
     endDate: { type: String, required: true },
