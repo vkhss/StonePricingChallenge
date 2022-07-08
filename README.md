@@ -36,12 +36,12 @@ can be sold
 }
 ~~~
 
-| sellerSeniority (Type String) * | productId (Type String) * | campaign (String) | customerSegment (Type String) *  | uf (Type String) * | tpv(Type Number) * | sellerPrice (Type Number) * |
-|---------------------------------|---------------------------|-------------------|----------------------------------|--------------------|--------------------|-----------------------------|
-| jr                              | 1 (Pedra da Sorte)        | 10offsp           | food                             | SP                 | 1000000            | 200                         |
-| pl                              | 2 (Pedra Roxa)            | 10offam           | health                           | MG                 | 500000             | 150                         |
-| sr                              | 3 (Pedra Fofa)            | 10offpremium      | it                               | AM                 | 10000              | 100                         |
-|                                 |                           | 10offbasic        | sales                            | PB                 | 5000               | 80                          |                     |
+| sellerSeniority (Type String) * | productId (Type String) * | campaign (String) | customerSegment (Type String) * | uf (Type String) * | tpv(Type Number) * | sellerPrice (Type Number) * |
+| ------------------------------- | ------------------------- | ----------------- | ------------------------------- | ------------------ | ------------------ | --------------------------- |
+| jr                              | 1 (Pedra da Sorte)        | 10offsp           | food                            | SP                 | 1000000            | 200                         |
+| pl                              | 2 (Pedra Roxa)            | 10offam           | health                          | MG                 | 500000             | 150                         |
+| sr                              | 3 (Pedra Fofa)            | 10offpremium      | it                              | AM                 | 10000              | 100                         |
+|                                 |                           | 10offbasic        | sales                           | PB                 | 5000               | 80                          |  |
 
 Notes: 
 - In the case of inserting product 3 (Pedra Fofa), the value indicated by the amount of use of the product in the month and together with the monthly value
@@ -75,18 +75,26 @@ This api  has the purpose of write pnl records of customers on pnl's collection 
 ~~~
 
 | productId (Type String) * | campaign (String) | uf (Type String) * | tpv(Type Number) * |
-|---------------------------|-------------------|--------------------|--------------------|
+| ------------------------- | ----------------- | ------------------ | ------------------ |
 | 1 (Pedra da Sorte)        | 10offsp           | SP                 | 1000000            |
 | 2 (Pedra Roxa)            | 10offam           | MG                 | 500000             |
 | 3 (Pedra Fofa)            | 10offpremium      | AM                 | 10000              |
 |                           | 10offbasic        | PB                 | 5000               |
 
 ### response params:
-```
-StatusCode => 201 msg:"PNLs criadas com sucesso!"
-StatusCode => 500 msg:"Produto e CPNJ já foram cadastrados na base!""
+~~~javascript
 
-```
+{
+    "statusCode": 201,
+    "msg": "PNLs criadas com sucesso!"
+}
+
+{
+    "statusCode": 400,
+    "msg": "Produto e CPNJ já foram cadastrados na base!"
+}
+
+~~~
 
 Note: 
 - If the "productId" is equal to 1, it will be considered as monthly and average value for a period of 10 months!
@@ -101,8 +109,8 @@ This api has the purpose of read pnl records of customers on pnl's collection (M
 
 ~~~javascript
 {
-cnpj: Customer cnpj
-productId: Id of product 
+    "cnpj" 16501555000157 // Customer Cnpj
+    "productId": 1 //Id of product 
 }
 
 // exemple: /pnl?cnpj=16501555000157&productId=1
@@ -136,8 +144,8 @@ productId: Id of product
                 "margin": 62.075, // profit margin 
                 "marginPercentage": "58.56%" //profit margin in percentage
             }
-            ]
-          }
+        ]
+    }
 }
 ~~~
 
