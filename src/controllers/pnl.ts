@@ -4,8 +4,6 @@ import moment from "moment"
 import utilsCampaign from "../utils/utils-campaign";
 import utilsValidator from "../utils/utils-validator";
 import utilsUf from "../utils/utils-uf";
-import _ from "lodash"
-
 
 //consulta de pnl
 const getPnl = (req: Request, res: Response, next: NextFunction) => {

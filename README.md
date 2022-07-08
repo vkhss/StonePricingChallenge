@@ -51,12 +51,24 @@ Notes:
 - The campaign field will apply a special discount on the amount offered to the customer, but isn't a mandatory field!
 
 ### response params:
-```
-StatusCode => 200 msg:"O Valor da venda está de ACORDO com o sugerido pela Pedregulho! Entre R$ X e R$ Y"
-StatusCode => 400 msg:"O Valor da venda está ACIMA do preço sugerido pela Pedregulho! Tente algo entre R$ X e R$ Y"
-StatusCode => 400 msg:"O Valor da venda está ABAIXO do preço sugerido pela Pedregulho! Tente algo entre R$ X e R$ Y"
+~~~javascript 
 
-```
+{
+    "statusCode": 200,
+    "msg": "O Valor da venda está de ACORDO com o sugerido pela Pedregulho! Entre R$ X e R$ Y"
+}
+
+{
+    "statusCode": 400,
+    "msg":"O Valor da venda está ACIMA do preço sugerido pela Pedregulho! Tente algo entre R$ X e R$ Y"
+}
+
+{
+    "statusCode": 400,
+    "msg":  "O Valor da venda está ABAIXO do preço sugerido pela Pedregulho! Tente algo entre R$ X e R$ Y"
+}
+
+~~~
 
 ## POST - /pnl
 
