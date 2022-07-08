@@ -31,7 +31,7 @@ can be sold
     "campaign": "10offsp", //promotional campaign (more examples below!)
     "sellerSeniority": "JR", //seller seniority (more examples below!)
     "customerSegment": "FOOD", //customer business segment (more examples below!)
-    "uf": "sp", //state in which the client is located! (more examples below!)
+    "uf": "sp", //state in which the customer is located! (more examples below!)
     "sellerPrice": 150 //Value informed by the seller!
 }
 ~~~
@@ -56,17 +56,17 @@ StatusCode => 400 msg:"O Valor da venda está ABAIXO do preço sugerido pela Ped
 
 ```
 
-### POST - /pnl
+## POST - /pnl
 
-This api  has the purpose of write pnl records for clients on pnl collection using mongoDb. 
+This api  has the purpose of write pnl records of customers on pnl's collection (MongoDb). 
 
-## body params: 
+### body params: 
 ~~~javascript
 {
     "cnpj": "16501555000157",  // Customer cnpj
     "productId": "1", // Id of product (more examples below!)
     "tpv": "1000", // Volume sold in reais (TPV)
-    "uf": "sp", // State in which the client is located! (more examples below!)
+    "uf": "sp", // State in which the customer is located! (more examples below!)
     "campaign": "10offsp", // Promotional campaign (more examples below!)
     "revenues": "106",  // Total revenue received from the customer! (Same as sellerPrice!)
     "manufacturingCost": 20, // Total manufacturing costs
@@ -83,7 +83,7 @@ This api  has the purpose of write pnl records for clients on pnl collection usi
 
 ### response params:
 ```
-StatusCode => 200 msg:"PNLs criadas com sucesso!"
+StatusCode => 201 msg:"PNLs criadas com sucesso!"
 StatusCode => 500 msg:"Produto e CPNJ já foram cadastrados na base!""
 
 ```
@@ -92,6 +92,57 @@ Note:
 - If the "productId" is equal to 1, it will be considered as monthly and average value for a period of 10 months!
 - If the "productId" is equal to 2, the value for the entire contract will be considered and the average value will be spread over 10 months!
 - If the "productId" is equal to 3, the product will be produced only once and charged for each time it is used! Then the field "revenuesPerUse" will be saved with values!
+
+## GET - /pnl
+
+This api has the purpose of read pnl records of customers on pnl's collection (MongoDb). 
+
+### queryString params: 
+
+~~~javascript
+{
+cnpj: Customer cnpj
+productId: Id of product 
+}
+
+// exemple: /pnl?cnpj=16501555000157&productId=1
+~~~
+
+
+
+
+### response params: 
+
+~~~javascript
+{
+    "statusCode": 200,
+    "body": {
+        "pnls": [
+            {
+                "cnpj": "16501555000157", // Customer cnpj
+                "productId": "1", //  Id of product 
+                "productName": "Pedra da Sorte", // Name of product 
+                "campaign": "10offsp", // Promotional campaign 
+                "uf": "sp", // State in which the customer is located!
+                "startDate": "07-2022", // Contract Start Date
+                "endDate": "05-2023", // Contract Final Date
+                "tpv": 1000, // Volume sold in reais 
+                "revenues": 106,// Total revenue received from the customer! 
+                "revenuesPerUse": 0,  // Total revenue received from the customer by use (Ex: productId equal 3 - Pedra Fofa)! 
+                "manufacturingCost": 20, // Total manufacturing costs
+                "shippingCost": 12, // Total shipping costs
+                "totalCost": 12, // Sum of total costs
+                "taxes": 11.925, // Taxes of 11,25%
+                "margin": 62.075, // profit margin 
+                "marginPercentage": "58.56%" //profit margin in percentage
+            }
+            ]
+          }
+}
+~~~
+
+
+
 
 
 
