@@ -73,7 +73,6 @@ const sendPnl = async (req: Request, res: Response, next: NextFunction) => {
         //validação de campanha
         await utilsCampaign.promotionalCampaigns(campaign, uf, tpv, 0)
 
-
         await Pnl.findOne({ cnpj, productId })
             .exec()
             .then(results => {
