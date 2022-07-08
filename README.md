@@ -15,19 +15,17 @@ $ docker-compose up
 
 HOST and PORT => http://localhost:4000/api/pricing/
 
-## Objective 1 (Negociação)
-
-### POST - /simulation
+## POST - /simulation
 
 This API has the purpose of simulating or receiving as customer information and defining
 if the asking price is higher than the minimum amount (monthly) that a Lucky Stone
 can be sold
 
-#### body params:
+### body params:
 
 ~~~javascript
 {
-    "cpnj": "00.000.000/0001-00", //customer cnpj
+    "cpnj": "16501555000157", //customer cnpj
     "tpv": 1000, // volume sold in reais (TPV)
     "productId": "1", // id of product (more examples below!)
     "campaign": "10offsp", //promotional campaign (more examples below!)
@@ -47,13 +45,40 @@ can be sold
 
 Note: In the case of inserting product 3 (Pedra Fofa), the value indicated by the amount of use of the product in the month and together with the monthly value
 
-#### response params:
+Note:The campaign field will apply a special discount on the amount offered to the customer, but isn't a mandatory field!
+
+### response params:
 ```
 StatusCode => 200 msg:"O Valor da venda está de ACORDO com o sugerido pela Pedregulho! Entre R$ X e R$ Y"
 StatusCode => 400 msg:"O Valor da venda está ACIMA do preço sugerido pela Pedregulho! Tente algo entre R$ X e R$ Y"
 StatusCode => 400 msg:"O Valor da venda está ABAIXO do preço sugerido pela Pedregulho! Tente algo entre R$ X e R$ Y"
 
 ```
+
+### POST - /pnl
+
+This api  has the purpose of write pnl records for clients on pnl collection using mongoDb. 
+
+## body params: 
+```
+{
+    "cnpj": "16501555000157",  // Customer cnpj
+    "productId": "1", // Id of product (more examples below!)
+    "tpv": "1000", // Volume sold in reais (TPV)
+    "uf": "sp", // State in which the client is located! (more examples below!)
+    "campaign": "10offsp", // Promotional campaign (more examples below!)
+    "revenues": "106",  // Total revenue received from the customer! (Same as sellerPrice!)
+    "manufacturingCost": 20, // Total manufacturing costs
+    "shippingCost": 12 // Total shipping costs
+}
+```
+
+| productId (Type String) * | campaign (String) | uf (Type String) * | tpv(Type Number) * |
+|---------------------------|-------------------|--------------------|--------------------|
+| 1 (Pedra da Sorte)        | 10offsp           | SP                 | 1000000            |
+| 2 (Pedra Roxa)            | 10offam           | MG                 | 500000             |
+| 3 (Pedra Fofa)            | 10offpremium      | AM                 | 10000              |
+|                           | 10offbasic        | PB                 | 5000               |
 
 
 
