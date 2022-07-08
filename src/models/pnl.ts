@@ -5,6 +5,8 @@ export interface Pnl extends Document {
     cnpj: String;
     productId: String;
     productName: String;
+    campaign: String;
+    uf: String;
     startDate: String;
     endDate: String;
     tpv: Number;
@@ -22,6 +24,8 @@ const PnlSchema = new Schema<Pnl>({
     cnpj: { type: String, required: true },
     productId: { type: String, required: true },
     productName: { type: String, required: true },
+    campaign: { type: String, required: true },
+    uf: { type: String, required: true },
     startDate: { type: String, required: true },
     endDate: { type: String, required: true },
     tpv: { type: Number, required: true },

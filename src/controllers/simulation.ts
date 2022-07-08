@@ -6,9 +6,13 @@ import utilsProduct from "../utils/utils-product";
 import utilsCustomer from "../utils/utils-customer";
 import utilsUf from "../utils/utils-uf";
 import utilsSimulation from "../utils/utils-simulation";
+import utilsValidator from "../utils/utils-validator";
 
 const pricingSimulation = async (req: Request, res: Response, next: NextFunction) => {
     try {
+        const mandatoryFields: Array<string> = ['cpnj', 'tpv', 'uf', 'productId', 'sellerPrice', 'sellerSeniority', 'customerSegment']
+        await utilsValidator.fieldValidator(req.body, mandatoryFields)
+
         let { tpv, sellerSeniority, customerSegment, uf, sellerPrice, productId, campaign } = req.body
         let measure = 0
         let limit: number = 1
@@ -34,9 +38,9 @@ const pricingSimulation = async (req: Request, res: Response, next: NextFunction
         measure = await utilsUf.uf(uf, measure)
 
         // 4) Campanhas promocionais
-        measure = await utilsCampaign.promotionalCampaigns(campaign, uf, tpv, measure)
-
-        console.log({ measure, productId, limit, sellerPrice })
+        if (campaign) {
+            measure = await utilsCampaign.promotionalCampaigns(campaign, uf, tpv, measure)
+        }
 
         //calculo de preço 
         const result = await utilsSimulation.pricing(measure, productId, limit, sellerPrice)

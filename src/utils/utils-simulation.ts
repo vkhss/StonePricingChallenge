@@ -4,6 +4,7 @@ const pricing = async (measure: number, productId: string, limit: number, seller
     let margin: number = 10
 
     try {
+        if (typeof sellerPrice != 'number') throw 'O campo sellerPrice deve conter valores do tipo numérico, para mais informações consulte a documentação!'
         let sugestedPrice = measure
         let sugestedPricePerUse = productId == "3" ? Number((measure) / limit).toFixed(4) : 0
 

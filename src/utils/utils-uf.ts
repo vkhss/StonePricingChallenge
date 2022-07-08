@@ -1,4 +1,4 @@
-const uf = async (uf: string, measure: number) => {
+const uf = async (uf: string, measure: number = 0) => {
     try {
         switch (uf) {
             case 'sp':

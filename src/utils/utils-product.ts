@@ -5,7 +5,6 @@ const validateProductId = async (productId: string, tpv: number, limit: number) 
             case '2':
                 break;
             case '3':
-                console.log("case 3")
                 limit = tpv * 0.10
                 break;
             default:
