@@ -27,13 +27,13 @@ can be sold
 
 ~~~javascript
 {
-    "cpnj": "16501555000157", //customer cnpj
-    "tpv": 1000, // volume sold in reais (TPV)
-    "productId": "1", // id of product (more examples below!)
-    "campaign": "10offsp", //promotional campaign (more examples below!)
-    "sellerSeniority": "JR", //seller seniority (more examples below!)
-    "customerSegment": "FOOD", //customer business segment (more examples below!)
-    "uf": "sp", //state in which the customer is located! (more examples below!)
+    "cpnj": "16501555000157", //Customer cnpj
+    "tpv": 1000, // Volume sold in reais (TPV)
+    "productId": "1", // Id of product (more examples below!)
+    "campaign": "10offsp", //Promotional campaign (more examples below!)
+    "sellerSeniority": "JR", //Seller seniority (more examples below!)
+    "customerSegment": "FOOD", //Customer business segment (more examples below!)
+    "uf": "sp", //State in which the customer is located! (more examples below!)
     "sellerPrice": 150 //Value informed by the seller!
 }
 ~~~
