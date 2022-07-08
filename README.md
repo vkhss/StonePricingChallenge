@@ -15,6 +15,8 @@ $ docker-compose up
 
 HOST and PORT => http://localhost:4000/api/pricing/
 
+Postman Collection => https://www.getpostman.com/collections/bcddb96ccef02f6efc17 
+
 ## POST - /simulation
 
 This API has the purpose of simulating or receiving as customer information and defining
@@ -148,6 +150,9 @@ This api has the purpose of read pnl records of customers on pnl's collection (M
     }
 }
 ~~~
+
+
+
 
 
 
