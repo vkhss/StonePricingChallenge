@@ -43,9 +43,10 @@ can be sold
 | sr                              | 3 (Pedra Fofa)            | 10offpremium      | it                               | AM                 | 10000              | 100                         |
 |                                 |                           | 10offbasic        | sales                            | PB                 | 5000               | 80                          |                     |
 
-Note: In the case of inserting product 3 (Pedra Fofa), the value indicated by the amount of use of the product in the month and together with the monthly value
+Notes: 
+- In the case of inserting product 3 (Pedra Fofa), the value indicated by the amount of use of the product in the month and together with the monthly value
 
-Note:The campaign field will apply a special discount on the amount offered to the customer, but isn't a mandatory field!
+- The campaign field will apply a special discount on the amount offered to the customer, but isn't a mandatory field!
 
 ### response params:
 ```
@@ -80,6 +81,17 @@ This api  has the purpose of write pnl records for clients on pnl collection usi
 | 3 (Pedra Fofa)            | 10offpremium      | AM                 | 10000              |
 |                           | 10offbasic        | PB                 | 5000               |
 
+### response params:
+```
+StatusCode => 200 msg:"PNLs criadas com sucesso!"
+StatusCode => 500 msg:"Produto e CPNJ já foram cadastrados na base!""
+
+```
+
+Note: 
+- If the "productId" is equal to 1, it will be considered as monthly and average value for a period of 10 months!
+- If the "productId" is equal to 2, the value for the entire contract will be considered and the average value will be spread over 10 months!
+- If the "productId" is equal to 3, the product will be produced only once and charged for each time it is used! Then the field "revenuesPerUse" will be saved with values!
 
 
 
